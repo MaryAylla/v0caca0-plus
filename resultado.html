@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Seu Resultado | Vocação Plus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/logo-arredondada.png" type="image/png">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light-soft">
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-gradient-custom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center text-white" href="index.html">
+                 <img src="assets/img/logo-removebg-preview.png" alt="logo" class="logo-navbar">VocaçãoPlus
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link text-white-50" href="index.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="quiz.html">Teste</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="cursos.html">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="sobre.html">Sobre Nós</a></li>
+                </ul>
+                 <a href="#" class="btn btn-indigo">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 container mb-5 pb-5" style="margin-top: 120px;">
+        
+        <div id="tela-carregamento" class="text-center py-5 mt-5 mb-5">
+            <div class="spinner-border text-vibrant mb-4" role="status" style="width: 4rem; height: 4rem;"></div>
+            <h2 class="fw-800 text-indigo">A IA está gerando o seu futuro...</h2>
+        </div>
+
+        <div id="tela-resultado" class="d-none">
+            <div class="row justify-content-center g-4">
+                
+                <div class="col-lg-10">
+                    <div class="card-figma bg-gradient-custom text-white text-center p-5 mb-4 position-relative overflow-hidden">
+                        <i class="fas fa-star position-absolute opacity-10" style="font-size: 15rem; top: -30px; right: -20px;"></i>
+                        <h5 class="fw-bold mb-2 text-white-50 text-uppercase">Perfil Dominante:</h5>
+                        <h1 class="display-3 fw-800 mb-0" id="res-eixo">...</h1>
+                    </div>
+                </div>
+
+                <div class="col-lg-10">
+                    <div class="card-figma p-4 mb-4 text-center">
+    <h4 class="text-indigo fw-bold mb-4"><i class="fas fa-chart-pie me-2 text-vibrant"></i>Seu Mapa de Competências</h4>
+    <div style="max-width: 500px; height: 350px; margin: 0 auto;">
+        <canvas id="graficoVocacional"></canvas>
+    </div>
+</div>
+                </div>
+
+                <div class="col-lg-10">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <div class="card-figma p-4 h-100">
+                                <h4 class="text-indigo fw-bold mb-4"><i class="fas fa-brain me-2 text-vibrant"></i>Análise da IA</h4>
+                                <p id="res-analise" class="text-muted" style="text-align: justify; line-height: 1.8;"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-figma p-4 border-start border-4 border-vibrant h-100">
+                                <h4 class="text-indigo fw-bold mb-4"><i class="fas fa-graduation-cap me-2 text-vibrant"></i>Sugestões</h4>
+                                <ul class="list-unstyled" id="res-cursos"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-10 mt-5">
+                    <div class="card-figma p-5 border-top border-5 border-vibrant shadow-lg">
+                        <div class="text-center mb-4">
+                            <h3 class="fw-800 text-indigo">Sua opinião é importante!</h3>
+                            <p class="text-muted">Ajude-nos a melhorar o Vocação Plus para outros estudantes.</p>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold text-indigo">Seu Nome</label>
+                                    <input type="text" id="fb-nome" class="form-control rounded-pill px-4 py-2" placeholder="Como quer ser chamado?">
+                                </div>
+                                
+                                <div class="mb-4 text-center">
+                                    <label class="form-label d-block fw-bold text-indigo">O que achou do resultado?</label>
+                                    <div class="star-rating fs-2">
+                                        <i class="far fa-star cursor-pointer text-vibrant" data-value="1"></i>
+                                        <i class="far fa-star cursor-pointer text-vibrant" data-value="2"></i>
+                                        <i class="far fa-star cursor-pointer text-vibrant" data-value="3"></i>
+                                        <i class="far fa-star cursor-pointer text-vibrant" data-value="4"></i>
+                                        <i class="far fa-star cursor-pointer text-vibrant" data-value="5"></i>
+                                    </div>
+                                    <input type="hidden" id="fb-rating" value="0">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold text-indigo">Comentário (Opcional)</label>
+                                    <textarea id="fb-comentario" class="form-control rounded-4 p-3" rows="3" placeholder="Conte-nos sua experiência..."></textarea>
+                                </div>
+
+                                <button onclick="enviarFeedback()" class="btn btn-indigo w-100 rounded-pill py-3 fw-bold fs-5 shadow">
+                                    Enviar Feedback <i class="fas fa-paper-plane ms-2"></i>
+                                </button>
+                                <div id="fb-msg" class="text-center mt-3 d-none fw-bold text-success">
+                                    <i class="fas fa-check-circle me-1"></i> Feedback enviado com sucesso!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer bg-gradient-custom pt-5 pb-3 mt-auto text-white">
+        <div class="container text-center text-lg-start">
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold"><img src="assets/img/logo-removebg-preview.png" alt="footer logo" class="logo-navbar">VocaçãoPlus</h5>
+                    <p class="mt-3 small">A transformar o futuro de estudantes com clareza e inteligência artificial.</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <h6 class="fw-bold mb-4">Siga-nos</h6>
+                    <div class="d-flex justify-content-center gap-3 fs-4">
+                        <a href="https://www.instagram.com/vocacaoplus" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <h6 class="fw-bold mb-4">Contato</h6>
+                    <p class="small mb-1">@vocacaoplus</p>
+                    <p class="small">uniguide2026@gmail.com</p>
+                </div>
+            </div>
+            <hr class="mt-4 opacity-25">
+            <p class="text-center small mb-0">&copy; 2026 Vocação Plus.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="assets/js/api.js"></script>
+</body>
+</html>
+</body>
+</html>

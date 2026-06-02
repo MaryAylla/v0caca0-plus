@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Cursos | Vocação Plus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/logo-arredondada.png" type="image/png">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light-soft">
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-gradient-custom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center text-white" href="index.html">
+                 <img src="assets/img/logo-removebg-preview.png" alt="logo" class="logo-navbar">VocaçãoPlus
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link text-white-50" href="index.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="quiz.html">Teste</a></li>
+                    <li class="nav-item"><a class="nav-link text-white active" href="cursos.html">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link text-white-50" href="sobre.html">Sobre Nós</a></li>
+                </ul>
+                <a href="#" class="btn btn-indigo">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1 pt-5 mt-5 container pb-5">
+        
+        <div class="row mb-4 pt-4">
+            <div class="col-12">
+                <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden border border-light bg-white">
+                    <span class="input-group-text bg-white border-0 text-vibrant ps-4"><i class="fas fa-search"></i></span>
+                    <input type="text" id="input-pesquisa" class="form-control border-0 bg-white shadow-none text-muted" placeholder="Busque por curso (ex: Enfermagem)...">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <aside class="col-lg-3 mb-4">
+                <div class="card-figma p-4 sticky-top" style="top: 100px; max-height: 85vh; overflow-y: auto;">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <h5 class="fw-800 text-indigo mb-0"><i class="fas fa-filter me-2 text-vibrant"></i>Filtros</h5>
+                        <button id="btn-limpar" class="btn btn-link text-muted small p-0 text-decoration-none d-none">Limpar</button>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-indigo mb-2">Ordem</h6>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="ordem" id="ordem-az" value="az" checked>
+                            <label class="form-check-label small" for="ordem-az">A - Z</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="ordem" id="ordem-za" value="za">
+                            <label class="form-check-label small" for="ordem-za">Z - A</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 border-top pt-3">
+                        <h6 class="fw-bold text-indigo mb-3">Instituição</h6>
+                        <div class="filtros-scroll" style="max-height: 150px; overflow-y: auto;">
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="URCA" id="inst-urca" name="instituicao"><label class="form-check-label text-muted small" for="inst-urca">URCA</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UFCA" id="inst-ufca" name="instituicao"><label class="form-check-label text-muted small" for="inst-ufca">UFCA</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="IFCE" id="inst-ifce" name="instituicao"><label class="form-check-label text-muted small" for="inst-ifce">IFCE</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="FATEC" id="inst-fatec" name="instituicao"><label class="form-check-label text-muted small" for="inst-fatec">FATEC</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="ESTÁCIO" id="inst-estacio" name="instituicao"><label class="form-check-label text-muted small" for="inst-estacio">Estácio</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNILEÃO" id="inst-unileao" name="instituicao"><label class="form-check-label text-muted small" for="inst-unileao">Unileão</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNINASSAU" id="inst-uninassau" name="instituicao"><label class="form-check-label text-muted small" for="inst-uninassau">Uninassau</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIFAP" id="inst-unifap" name="instituicao"><label class="form-check-label text-muted small" for="inst-unifap">UNIFAP</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIFAMEC" id="inst-unifamec" name="instituicao"><label class="form-check-label text-muted small" for="inst-unifamec">UNIFAMEC</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="CECAPE" id="inst-cecape" name="instituicao"><label class="form-check-label text-muted small" for="inst-cecape">CECAPE</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UAB" id="inst-uab" name="instituicao"><label class="form-check-label text-muted small" for="inst-uab">UAB</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIASSELVI" id="inst-uniasselvi" name="instituicao"><label class="form-check-label text-muted small" for="inst-uniasselvi">UNIASSELVI</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIFACS" id="inst-unifacs" name="instituicao"><label class="form-check-label text-muted small" for="inst-unifacs">UNIFACS</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIFATECIE" id="inst-unifatecie" name="instituicao"><label class="form-check-label text-muted small" for="inst-unifatecie">UNIFATECIE</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNINTER" id="inst-uninter" name="instituicao"><label class="form-check-label text-muted small" for="inst-uninter">UNINTER</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNIP" id="inst-unip" name="instituicao"><label class="form-check-label text-muted small" for="inst-unip">UNIP</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UNOPAR" id="inst-unopar" name="instituicao"><label class="form-check-label text-muted small" for="inst-unopar">UNOPAR</label></div>
+                            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="UVA" id="inst-uva" name="instituicao"><label class="form-check-label text-muted small" for="inst-uva">UVA</label></div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-4 border-top pt-3">
+                        <h6 class="fw-bold text-indigo mb-3">Duração do Curso</h6>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="curto" id="dur-curto" name="duracao"><label class="form-check-label text-muted small" for="dur-curto">Curta (Até 5 semestres)</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="medio" id="dur-medio" name="duracao"><label class="form-check-label text-muted small" for="dur-medio">Média (6 a 8 semestres)</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="longo" id="dur-longo" name="duracao"><label class="form-check-label text-muted small" for="dur-longo">Longa (9+ semestres)</label></div>
+                    </div>
+
+                    <div class="mb-4 border-top pt-3">
+                        <h6 class="fw-bold text-indigo mb-3">Área de Estudo</h6>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="TECNOLOGIA" name="area"><label class="form-check-label text-muted small">Tecnologia & TI</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="SAUDE" name="area"><label class="form-check-label text-muted small">Saúde</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="NEGOCIOS" name="area"><label class="form-check-label text-muted small">Negócios & Gestão</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="HUMANAS" name="area"><label class="form-check-label text-muted small">Humanas & Educação</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="checkbox" value="EXATAS" name="area"><label class="form-check-label text-muted small">Exatas & Engenharias</label></div>
+                    </div>
+
+                    <button id="btn-filtrar" class="btn btn-indigo w-100 rounded-pill mt-2">Aplicar Filtros</button>
+                </div>
+            </aside>
+
+            <section class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <p class="text-muted mb-0" id="info-resultados">Carregando cursos...</p>
+                </div>
+
+                <div id="container-cursos" class="row">
+                    <div class="text-center py-5 my-5 w-100">
+                        <div class="spinner-border text-vibrant" role="status"></div>
+                    </div>
+                </div>
+
+                <nav class="mt-5 d-flex justify-content-center">
+                    <ul class="pagination pagination-lg shadow-sm" id="paginacao-cursos"></ul>
+                </nav>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer bg-gradient-custom pt-5 pb-3 text-white">
+        <div class="container text-center text-lg-start">
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold"><img src="assets/img/logo-removebg-preview.png" alt="footer logo" class="logo-navbar">VocaçãoPlus</h5>
+                    <p class="mt-3 small">Transformando o futuro de estudantes com clareza e inteligência artificial.</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <h6 class="fw-bold mb-4">Siga-nos</h6>
+                    <div class="d-flex justify-content-center gap-3 fs-4">
+                        <a href="https://www.instagram.com/vocacaoplus" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <h6 class="fw-bold mb-4">Contato</h6>
+                    <p class="small mb-1">@vocacaoplus</p>
+                    <p class="small">uniguide2026@gmail.com</p>
+                </div>
+            </div>
+            <hr class="mt-4 opacity-25">
+            <p class="text-center small mb-0">&copy; 2026 Vocação Plus.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/data.js"></script>
+</body>
+</html>
