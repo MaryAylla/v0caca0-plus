@@ -102,14 +102,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } else {
                 // ☁️ RODA VIA BACK-END VERCEL (Seguro para o TCC em produção)
-                // Caminho corrigido para bater diretamente com a API Serverless da raiz
                 const resposta = await fetch('/api/gerar-analise', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: promptParaIA })
                 });
 
-                if (!resposta.ok) throw new Error("Erro de comunicação com o servidor Vercel.");
+                // 🔴 O DESMASCARADOR DE ERROS:
+                if (!resposta.ok) {
+                    const statusErro = resposta.status;
+                    const detalheVercel = await resposta.text();
+                    throw new Error(`A Vercel falhou. Código ${statusErro}. Detalhe: ${detalheVercel}`);
+                }
+                
                 resultadoFinal = await resposta.json();
             }
 
