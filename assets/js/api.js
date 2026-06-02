@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     elEixo.innerText = eixoVencedor.toUpperCase();
 
-    // Prompt
+    // Prompt (Sintaxe de colchetes e vírgulas corrigida para o JSON)
     const promptParaIA = `
         Você é um orientador vocacional de um projeto chamado 'Vocação Plus', no Cariri, Ceará.
         Eixo dominante do aluno: "${eixoVencedor}".
@@ -60,15 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
             "analise": "Um texto de 2 parágrafos elogiando as habilidades do aluno e dando incentivo.",
             "cursos_sugeridos": [
                 {
-                    "nome": "Nome do Curso 1",
+                    "name": "Nome do Curso 1",
                     "descricao": "Explicação de 2 linhas sobre o curso e o motivo de combinar com o aluno."
                 },
                 {
-                    "nome": "Nome do Curso 2",
+                    "name": "Nome do Curso 2",
                     "descricao": "Explicação de 2 linhas..."
-                }
-                    {
-                    "nome": "Nome do Curso 3",
+                },
+                {
+                    "name": "Nome do Curso 3",
                     "descricao": "Explicação de 2 linhas..."
                 }
             ]
@@ -82,8 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // BLOCO 1: Busca os dados (Decide se usa o Local ou a Vercel)
         try {
             if (MODO_DESENVOLVIMENTO) {
-                // 💻 RODA DIRETO NO NAVEGADOR (Para terminar os testes do TCC hoje)
-                // Usando o modelo 1.5-flash para garantir as 1500 requisições/dia gratuitas
+                // 💻 RODA DIRETO NO NAVEGADOR (Para terminar os testes do TCC localmente)
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY_LOCAL}`;
                 const resposta = await fetch(url, {
                     method: 'POST',
@@ -102,8 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultadoFinal = JSON.parse(respostaTexto);
 
             } else {
-                // ☁️ RODA VIA BACK-END VERCEL (Para a produção com os alunos da escola)
-                const resposta = await fetch('assets/api/gerar-analise', {
+                // ☁️ RODA VIA BACK-END VERCEL (Seguro para o TCC em produção)
+                // Caminho corrigido para bater diretamente com a API Serverless da raiz
+                const resposta = await fetch('/api/gerar-analise', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: promptParaIA })
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultadoFinal.cursos_sugeridos.forEach(curso => {
                 elCursos.innerHTML += `
                     <li class="mb-3 p-3 bg-white rounded-3 border-start border-primary border-4 shadow-sm hover-up">
-                        <h6 class="fw-bold text-indigo mb-1">${curso.nome}</h6>
+                        <h6 class="fw-bold text-indigo mb-1">${curso.nome || curso.name}</h6>
                         <p class="text-muted small mb-0" style="line-height: 1.4;">${curso.descricao}</p>
                     </li>
                 `;
@@ -200,14 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.enviarFeedback = () => {
         const nome = document.getElementById('fb-nome').value;
         const nota = document.getElementById('fb-rating').value;
-        const msg = document.getElementById('fb-comentario').value; // Resgata o comentário opcional
+        const msg = document.getElementById('fb-comentario').value;
 
         if(!nome || nota == 0) {
             alert("Por favor, preencha o seu nome e selecione uma estrela!");
             return;
         }
 
-        // Salva o feedback no navegador para aparecer na página inicial
         let avaliacoes = JSON.parse(localStorage.getItem('vocacaoPlus_avaliacoes')) || [];
         avaliacoes.unshift({
             nome: nome,
