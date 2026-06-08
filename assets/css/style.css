@@ -321,3 +321,36 @@ body {
         font-size: 1.1rem;
     }
 }
+
+/* ==========================================================================
+   AJUSTES MOBILE - CARD DE RESULTADO (ESTRELA FONT-AWESOME)
+   ========================================================================== */
+@media (max-width: 768px) {
+    
+    /* 1. Reduz e reposiciona a estrela no celular, sobrescrevendo o HTML */
+    .card-figma i.fa-star.position-absolute {
+        font-size: 8rem !important;      /* Corta o tamanho pela metade */
+        top: 50% !important;             /* Centraliza verticalmente */
+        right: -20px !important;         /* Mantém no cantinho direito */
+        transform: translateY(-50%);     /* Ajuste fino do centro vertical */
+        z-index: 0;                      /* Joga a estrela para o fundo */
+        opacity: 0.1 !important;         /* Garante que fique bem transparente */
+    }
+
+    /* 2. Traz os textos para a frente para nunca serem cobertos */
+    .card-figma h5.text-white-50,
+    .card-figma h1#res-eixo {
+        position: relative;
+        z-index: 2;                      /* Coloca os textos acima da estrela */
+    }
+
+    /* 3. Reduz o padding (p-5) do card para ganhar espaço útil na tela do celular */
+    .card-figma.p-5 {
+        padding: 2.5rem 1.5rem !important;
+    }
+    
+    /* 4. Ajusta o tamanho da fonte do resultado para não quebrar a linha */
+    .card-figma h1#res-eixo {
+        font-size: 2.5rem !important;
+    }
+}
