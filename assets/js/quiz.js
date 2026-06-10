@@ -67,11 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAnt = document.getElementById('btn-ant');
     const btnProx = document.getElementById('btn-prox');
 
-    // Variáveis de Estado (Paginação)
-    let paginaAtualIndex = 0; 
+    // Inicializa as classes de animação no container principal
+    containerQuiz.classList.add('quiz-container-animado');
+
     const perguntasPorPagina = 5;
     const totalPaginas = Math.ceil(bancoDePerguntas.length / perguntasPorPagina);
-    let respostasDoUsuario = {}; 
+
+    // 💾 SISTEMA DE SALVAMENTO: Puxa o progresso do navegador ou começa do zero
+    let respostasDoUsuario = JSON.parse(localStorage.getItem('vp_progresso_respostas')) || {};
+    let paginaAtualIndex = parseInt(localStorage.getItem('vp_progresso_pagina')) || 0;
 
     // 1. Renderiza a página atual com as 5 perguntas
     const renderizarPagina = () => {
@@ -112,23 +116,28 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
-        // Aplica o padding para a barra azul do rodapé não bugar
         containerQuiz.innerHTML = `<div class="p-4 p-md-5">${html}</div>`;
         
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Sobe a tela suavemente ao mudar de página
+        // Remove a classe de fade-out com um pequeno atraso para a animação de entrada (Fade In)
+        setTimeout(() => {
+            containerQuiz.classList.remove('quiz-fade-out');
+        }, 50);
+
         atualizarProgressoE_Botoes();
     };
 
     // 2. Quando o usuário clica em uma resposta
     window.selecionarResposta = (idPergunta, valor, botaoClicado) => {
+        // Salva a resposta atual na memória e logo em seguida no navegador
         respostasDoUsuario[idPergunta] = valor;
+        localStorage.setItem('vp_progresso_respostas', JSON.stringify(respostasDoUsuario));
 
-        // Pinta apenas os botões daquela pergunta específica
         const todosBotoes = document.getElementById(`grupo-pergunta-${idPergunta}`).querySelectorAll('button');
         todosBotoes.forEach(btn => {
             btn.classList.remove('btn-indigo');
             btn.classList.add('btn-outline-primary', 'bg-white');
         });
+        
         botaoClicado.classList.remove('btn-outline-primary', 'bg-white');
         botaoClicado.classList.add('btn-indigo');
 
@@ -146,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btnAnt.disabled = paginaAtualIndex === 0;
 
-        // 🧠 INTELIGÊNCIA: Verifica se todas as 5 perguntas DESTA página foram respondidas
         const inicio = paginaAtualIndex * perguntasPorPagina;
         const fim = inicio + perguntasPorPagina;
         const perguntasDaPagina = bancoDePerguntas.slice(inicio, fim);
@@ -164,31 +172,65 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 4. Ação dos Botões
+    // 🎭 SISTEMA DE ANIMAÇÃO: Controla a troca de páginas com o Fade e Scroll
+    const mudarPaginaComAnimacao = (novaPagina) => {
+        // Aplica o Fade Out (As perguntas desaparecem subindo um pouquinho)
+        containerQuiz.classList.add('quiz-fade-out');
+        
+        // Inicia o scroll para o topo ao mesmo tempo que as perguntas somem
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Espera exatos 250ms (o tempo da nossa animação CSS) antes de renderizar a nova tela
+        setTimeout(() => {
+            paginaAtualIndex = novaPagina;
+            
+            // Salva a nova página no navegador para continuar de onde parou
+            localStorage.setItem('vp_progresso_pagina', paginaAtualIndex); 
+            
+            renderizarPagina(); 
+        }, 250);
+    };
+
+    // 4. Ação dos Botões (Agora chamam a função de animação)
     btnAnt.addEventListener('click', () => {
         if (paginaAtualIndex > 0) {
-            paginaAtualIndex--;
-            renderizarPagina();
+            mudarPaginaComAnimacao(paginaAtualIndex - 1);
         }
     });
 
     btnProx.addEventListener('click', () => {
         if (paginaAtualIndex < totalPaginas - 1) {
-            paginaAtualIndex++;
-            renderizarPagina();
+            mudarPaginaComAnimacao(paginaAtualIndex + 1);
         } else {
             finalizarQuiz();
         }
     });
 
-    // 5. Finalizar
+    // 5. Finalizar (Com Trava de Segurança e Loading)
     const finalizarQuiz = () => {
+        // 1. Trava o botão imediatamente para evitar múltiplos cliques ansiosos
+        btnProx.disabled = true;
+        btnProx.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Processando Perfil...';
+        btnProx.classList.replace('btn-success', 'btn-secondary'); // Deixa cinza para indicar que está carregando
+
+        // 2. Limpa o progresso temporário
+        localStorage.removeItem('vp_progresso_respostas');
+        localStorage.removeItem('vp_progresso_pagina');
+
+        // 3. Empacota os dados
         const dadosCompletos = {
             respostas: respostasDoUsuario,
             perguntasInfo: bancoDePerguntas
         };
+        
+        // 4. Salva os dados finais para a IA analisar
         localStorage.setItem('vocacaoPlus_respostas', JSON.stringify(dadosCompletos));
-        window.location.href = "resultado.html";
+
+        // 5. O Segredo: Dá um fôlego de 1 segundo para o navegador respirar e gravar 
+        // tudo com calma na memória antes de mudar de página
+        setTimeout(() => {
+            window.location.href = "resultado.html"; // Ajuste o nome se for resultados.html
+        }, 1000);
     };
 
     // Start!

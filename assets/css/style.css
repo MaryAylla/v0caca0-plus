@@ -354,3 +354,20 @@ body {
         font-size: 2.5rem !important;
     }
 }
+
+/* ==========================================================================
+   ANIMAÇÕES DO TESTE VOCACIONAL (FADE E SLIDE)
+   ========================================================================== */
+
+/* Essa classe vai no container que guarda a pergunta e os botões */
+.quiz-container-animado {
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Essa classe nós vamos adicionar via JS quando for esconder a pergunta */
+.quiz-fade-out {
+    opacity: 0;
+    transform: translateY(15px); /* Desce um pouquinho e some */
+}
